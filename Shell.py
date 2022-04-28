@@ -17,9 +17,10 @@ class Function:
 
 class Exit(Function):
     num_ars = 1
+    f_name = "exit"
 
     @staticmethod
-    def exit():
+    def execute():
         if not check(Exit.fun_name, Exit.num_ars, "exit"):
             print("no such command")
             return False
@@ -28,9 +29,10 @@ class Exit(Function):
 
 class Mkdir(Function):
     num_ars = 2
+    f_name = "mkdir"
 
     @staticmethod
-    def mkdir():
+    def execute():
         if not check(Mkdir.fun_name, Mkdir.num_ars, "mkdir"):
             print("no such command")
             return
@@ -41,9 +43,10 @@ class Mkdir(Function):
 
 class Ls(Function):
     num_ars = 1
+    f_name = "ls"
 
     @staticmethod
-    def ls():
+    def execute():
         if not check(Ls.fun_name, Ls.num_ars, "ls"):
             print("no such command")
             return
@@ -54,9 +57,10 @@ class Ls(Function):
 
 class Pwd(Function):
     num_ars = 1
+    f_name = "pwd"
 
     @staticmethod
-    def pwd():
+    def execute():
         if not check(Pwd.fun_name, Pwd.num_ars, "pwd"):
             print("no such command")
             return
@@ -64,9 +68,10 @@ class Pwd(Function):
 
 
 class Cd(Function):
+    f_name = "cd"
 
     @staticmethod
-    def cd():
+    def execute():
         args = Cd.fun_name.split(" ")
         if len(args) == 1:
             if args[0] == "cd":
@@ -84,9 +89,10 @@ class Cd(Function):
 
 class RmDir(Function):
     num_ars = 2
+    f_name = "rmdir"
 
     @staticmethod
-    def rmdir():
+    def execute():
         if not check(RmDir.fun_name, RmDir.num_ars, "rmdir"):
             print("no such command")
             return
@@ -105,9 +111,10 @@ class RmDir(Function):
 
 class Cp(Function):
     num_args = 3
+    f_name = "cp"
 
     @staticmethod
-    def cp():
+    def execute():
         if not check(Cp.fun_name, Cp.num_ars, "cp"):
             print("no such command")
             return
@@ -125,9 +132,10 @@ class Cp(Function):
 
 class Mv(Function):
     num_ars = 3
+    f_name = "mv"
 
     @staticmethod
-    def mv():
+    def execute():
         if not check(Mv.fun_name, Mv.num_ars, "mv"):
             print("no such command")
             return
@@ -150,9 +158,10 @@ class Mv(Function):
 
 
 class Rm(Function):
+    f_name = "rm"
 
     @staticmethod
-    def rm():
+    def execute():
         args = Rm.fun_name.split(" ")
         if len(args) > 2:
             print("no directory or file")
@@ -172,46 +181,26 @@ class Rm(Function):
             print('No such file')
 
 
-print('Terminal V 1.0')
-while True:
-    cmd = input()
-    if cmd[0:4] == "exit":
-        command = Exit
-        command.fun_name = cmd
-        if command.exit():
-            break
-    elif cmd[0:5] == "mkdir":
-        command = Mkdir
-        command.fun_name = cmd
-        command.mkdir()
-    elif cmd[0:2] == "ls":
-        command = Ls
-        command.fun_name = cmd
-        command.ls()
-    elif cmd[0:3] == "pwd":
-        command = Pwd
-        command.fun_name = cmd
-        command.pwd()
-    elif cmd[0:2] == "cd":
-        command = Cd
-        command.fun_name = cmd
-        command.cd()
-    elif cmd[0:5] == "rmdir":
-        command = RmDir
-        command.fun_name = cmd
-        command.rmdir()
-    elif cmd[0:2] == "cp":
-        command = Cp
-        command.fun_name = cmd
-        command.cp()
-    elif cmd[0:2] == "mv":
-        command = Mv
-        command.fun_name = cmd
-        command.mv()
-    elif cmd[0:2] == "rm":
-        command = Rm
-        command.fun_name = cmd
-        command.rm()
-    else:
-        print("no such command")
-print('end.')
+class Shell:
+    commands = [Cd, Ls, Mkdir, Pwd, Exit, RmDir, Cp, Mv, Rm]
+
+    def shell(self):
+        print('Terminal V 1.0')
+        while True:
+            cmd = input()
+            word = cmd.split()
+            id = False
+            if word[0] == Exit.f_name:
+                break
+            for i in self.commands:
+                if word[0] == i.f_name:
+                    i.fun_name = cmd
+                    i.execute()
+                    id = True
+            if not id:
+                print("no such command")
+        print('end.')
+
+
+sh = Shell
+sh.shell(sh)
