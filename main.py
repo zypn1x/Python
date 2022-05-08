@@ -1,7 +1,5 @@
-from src.shell import Shell
+from shell import Shell
 
 if __name__ == "__main__":
-    new_shell = Shell
-    new_shell.run(new_shell)
-else:
-    print("incorrect status")
+    shell = Shell()
+    shell.run()
