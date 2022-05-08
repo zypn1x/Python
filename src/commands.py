@@ -110,7 +110,7 @@ class RmDir(Function):
     def __init__(self, command):
         self.buffer = command.split(" ")
         self.id = check(self.buffer, RmDir.num_ars, "rmdir")
-        if not id:
+        if not self.id:
             print("incorrect command. May be you wanted to print 'rmdir <dirname>'?")
         else:
             exist = False
@@ -145,7 +145,7 @@ class Cp(Function):
             print("incorrect command. May be you wanted to print 'cp <copy file name> <new file name>'?")
 
     def execute(self):
-        if id:
+        if self.id:
             os.system(self.fun_name)
 
 
@@ -196,5 +196,5 @@ class Rm(Function):
         print('No such file')
 
     def execute(self):
-        if id:
+        if self.id:
             os.remove(self.buffer[1])
